@@ -1,9 +1,10 @@
 import { useState } from "react";
-import NewTaskForm from "./NewTaskForm.jsx";
-import TaskList from "./TaskList.jsx";
+import NewTaskForm from "./components/NewTaskForm.jsx";
+import TaskList from "./components/TaskList.jsx";
+import Header from "./components/Header.jsx";
 import "./styles/reset.css";
 import "./styles/style.css";
-import Header from "./Header.jsx";
+import TaskMenu from "./components/TaskMenu.jsx";
 
 export default function App() {
     const [tasks, setTasks] = useState([]);
@@ -15,7 +16,6 @@ export default function App() {
                 { id: crypto.randomUUID(), title, done: false }
             ]
         );
-
     }
 
     function toggleTask(id) {
@@ -34,11 +34,19 @@ export default function App() {
     return (
         <>
             <Header />
-            <div className="app">
+            <main className="app">
                 <NewTaskForm onSubmit={addTask} />
-                <h1 className="list-title">Todo-list:</h1>
+
+                <TaskMenu />
+
+                <h2 className="list-title">Todo-list:</h2>
+
                 <TaskList tasks={tasks} toggleTask={toggleTask} deleteTask={deleteTask} />
-            </div>
+
+                <button className="btn-add-task-full">
+                    + Додати задачу
+                </button>
+            </main>
         </>
     );
 }
