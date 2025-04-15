@@ -11,17 +11,18 @@ export default function NewTaskForm({ onSubmit }) {
     }
 
     return (
-        <form onSubmit={handleNewTask}>
-            <div>
-                <label htmlFor="item">New item</label>
+        <form className="task-form" onSubmit={handleNewTask}>
+            <div className="form-group">
                 <input
                     type="text"
                     id="item"
+                    className="task-input"
                     value={newTask}
                     onChange={(e) => setNewTask(e.target.value)}
+                    placeholder="Enter task"
                 />
             </div>
-            <button>Add</button>
+            <button className="btn-add" type="submit">Add</button>
         </form>
     );
 }

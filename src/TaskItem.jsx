@@ -1,15 +1,16 @@
 export default function TaskItem({ task, toggleTask, deleteTask }) {
     return (
-        <li key={task.id}>
-            <label>
+        <li className="task-list-item" key={task.id}>
+            <div className="task-content">
                 <input
+                    className="task-toggle"
                     type="checkbox"
                     checked={task.done}
                     onChange={() => toggleTask(task.id)}
                 />
-                {task.title}
-            </label>
-            <button onClick={() => deleteTask(task.id)}>Delete</button>
+                <span className="task-title">{task.title}</span>
+            </div>
+            <button className="btn-delete" onClick={() => deleteTask(task.id)}>Delete</button>
         </li>
     )
 }
