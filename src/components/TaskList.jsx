@@ -1,7 +1,7 @@
 import TaskItem from "./TaskItem.jsx";
 import "../styles/task-list.css";
 
-export default function TaskList({ tasks, toggleTask, deleteTask }) {
+export default function TaskList({ tasks, toggleTask, editTask, deleteTask }) {
     return (
         <ul className="task-list">
             {tasks.length === 0 ?
@@ -9,7 +9,7 @@ export default function TaskList({ tasks, toggleTask, deleteTask }) {
                     :(
                 </p>
                 : tasks.map((task) => {
-                    return <TaskItem key={task.id} task={task} toggleTask={toggleTask} deleteTask={deleteTask} />;
+                    return <TaskItem key={task.id} task={task} toggleTask={toggleTask} editTask={editTask} deleteTask={deleteTask} />;
                 })
             }
         </ul>

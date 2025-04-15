@@ -3,7 +3,7 @@ import { MdOutlineDateRange } from "react-icons/md";
 import { format } from 'date-fns';
 import "../styles/task-item.css";
 
-export default function TaskItem({ task, toggleTask, deleteTask }) {
+export default function TaskItem({ task, toggleTask, editTask, deleteTask }) {
     const { id, title, done, deadline, priority, description, subtasks } = task;
 
     const deadlineFormatted = deadline
@@ -48,7 +48,7 @@ export default function TaskItem({ task, toggleTask, deleteTask }) {
             </div>
 
             <div className="task-actions">
-                <button className="btn-edit" onClick={() => console.log("edit", id)}>
+                <button className="btn-edit" onClick={() => editTask(task)}>
                     <FaEdit />
                 </button>
                 <button className="btn-delete" onClick={() => deleteTask(id)}>

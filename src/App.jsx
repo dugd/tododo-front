@@ -7,20 +7,58 @@ import "./styles/reset.css";
 import "./styles/base.css";
 import "./styles/layout.css";
 import "./styles/task-menu.css";
+import TaskFormModal from "./components/TaskFormModal.jsx";
 
 
 export default function App() {
     const [tasks, setTasks] = useState(initTasks);
+
+    const [modalOpen, setModalOpen] = useState(false);
+    const [editingTask, setEditingTask] = useState(null);
+
     const [filterFn, setFilterFn] = useState(() => () => true);
     const [sortFn, setSortFn] = useState(null);
 
-    function addTask(title) {
+    function addTask({ title, description, deadline, priority }) {
         setTasks(prevTasks =>
             [
                 ...prevTasks,
-                { id: crypto.randomUUID(), title, done: false }
+                {
+                    id: crypto.randomUUID(),
+                    title,
+                    description,
+                    deadline,
+                    priority,
+                    done: false
+                }
             ]
         );
+    }
+
+    function editTask(id, data) {
+        setTasks(prevTasks => prevTasks.map(t => {
+            return t.id === id ? { ...t, ...data } : t;
+            })
+        );
+    }
+
+    function openCreateModal() {
+        setEditingTask(null);
+        setModalOpen(true);
+    }
+
+    function openEditModal(task) {
+        setEditingTask(task);
+        setModalOpen(true);
+    }
+
+    function saveTask(data) {
+        if (editingTask) {
+            editTask(editingTask.id, data);
+        }
+        else {
+            addTask(data);
+        }
     }
 
     function toggleTask(id) {
@@ -49,11 +87,21 @@ export default function App() {
 
                 <h2 className="list-title">Todo-list:</h2>
 
-                <TaskList tasks={visibleTasks} toggleTask={toggleTask} deleteTask={deleteTask} />
+                <TaskList tasks={visibleTasks} toggleTask={toggleTask} editTask={openEditModal} deleteTask={deleteTask} />
 
-                <button className="btn-add-task-full">
+                <button
+                    className="btn-add-task-full"
+                    onClick={() => openCreateModal()}
+                >
                     + Додати задачу
                 </button>
+
+                <TaskFormModal
+                    isOpen={modalOpen}
+                    onClose={ () => setModalOpen(false) }
+                    onSave={ saveTask }
+                    initialData={ editingTask }
+                />
             </main>
         </>
     );
