@@ -1,0 +1,23 @@
+.task-menu {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 16px;
+    font-size: 1rem;
+    color: #555;
+}
+
+.btn-add-task-full {
+    width: 100%;
+    background: transparent;
+    color: #3f51b5;
+    border: none;
+    padding: 12px;
+    border-radius: 12px;
+    font-size: 1rem;
+    cursor: pointer;
+    transition: background-color 0.2s ease;
+}
+
+.btn-add-task-full:hover {
+    background-color: rgba(63, 81, 181, 0.1);
+}

@@ -1,4 +1,5 @@
 import TaskItem from "./TaskItem.jsx";
+import "../styles/task-list.css";
 
 export default function TaskList({ tasks, toggleTask, deleteTask }) {
     return (
