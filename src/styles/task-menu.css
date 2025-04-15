@@ -21,3 +21,44 @@
 .btn-add-task-full:hover {
     background-color: rgba(63, 81, 181, 0.1);
 }
+
+.task-menu {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    margin-bottom: 16px;
+}
+
+.menu-group {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 8px;
+}
+
+.menu-label {
+    font-weight: 600;
+    color: #444;
+    margin-right: 4px;
+}
+
+.menu-btn {
+    background-color: transparent;
+    border: 1px solid #ccc;
+    border-radius: 16px;
+    padding: 6px 12px;
+    font-size: 0.9rem;
+    color: #333;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.menu-btn:hover {
+    background-color: #e6e9f0;
+}
+
+.menu-btn.selected {
+    background-color: #3f51b5;
+    color: white;
+    border-color: #3f51b5;
+}

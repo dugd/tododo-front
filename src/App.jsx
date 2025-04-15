@@ -11,6 +11,8 @@ import "./styles/task-menu.css";
 
 export default function App() {
     const [tasks, setTasks] = useState(initTasks);
+    const [filterFn, setFilterFn] = useState(() => () => true);
+    const [sortFn, setSortFn] = useState(null);
 
     function addTask(title) {
         setTasks(prevTasks =>
@@ -34,16 +36,20 @@ export default function App() {
         setTasks(prevTasks => prevTasks.filter((t) => t.id !== id))
     }
 
+    const visibleTasks = tasks
+        .filter(filterFn)
+        .sort(sortFn ? sortFn : () => 0);
+
     return (
         <>
             <Header />
             <main className="app">
 
-                <TaskMenu />
+                <TaskMenu onFilter={setFilterFn} onSort={setSortFn} />
 
                 <h2 className="list-title">Todo-list:</h2>
 
-                <TaskList tasks={tasks} toggleTask={toggleTask} deleteTask={deleteTask} />
+                <TaskList tasks={visibleTasks} toggleTask={toggleTask} deleteTask={deleteTask} />
 
                 <button className="btn-add-task-full">
                     + Додати задачу
