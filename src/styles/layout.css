@@ -1,5 +1,6 @@
 .app {
-    max-width: 700px;
+    max-width: 720px;
+    min-width: 620px;
     margin: 0 auto;
     padding: 24px;
     background-color: white;
@@ -9,6 +10,7 @@
 
 .app-header {
     background-color: #3f51b5;
+    min-width: 620px;
     padding: 16px 0;
     color: white;
     margin-bottom: 24px;

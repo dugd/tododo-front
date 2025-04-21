@@ -56,27 +56,31 @@ export default function TaskMenu({ onFilter, onSort }) {
     return (
         <div className="task-menu">
             <div className="menu-group">
-                <span className="menu-label">Фільтр:</span>
-                {filterOptions.map((option, index) => (
-                    <button
-                        key={option.text}
-                        className={`menu-btn ${index === selectedFilter ? 'selected' : ''}`}
-                        onClick={() => handleFilter(index)}>
-                        {option.text}
-                    </button>
-                ))}
+                <span className="menu-label">Фільтр</span>
+                <div className="menu-btn-wrapper">
+                    {filterOptions.map((option, index) => (
+                        <button
+                            key={option.text}
+                            className={`menu-btn ${index === selectedFilter ? 'selected' : ''}`}
+                            onClick={() => handleFilter(index)}>
+                            {option.text}
+                        </button>
+                    ))}
+                </div>
             </div>
 
             <div className="menu-group">
-                <span className="menu-label">Сортування:</span>
-                {sortOptions.map((option, index) => (
-                    <button
-                        key={option.text}
-                        className={`menu-btn ${index === selectedSort ? 'selected' : ''}`}
-                        onClick={() => handleSort(index)}>
-                        {option.text}
-                    </button>
-                ))}
+                <span className="menu-label">Сортування</span>
+                <div className="menu-btn-wrapper">
+                    {sortOptions.map((option, index) => (
+                        <button
+                            key={option.text}
+                            className={`menu-btn ${index === selectedSort ? 'selected' : ''}`}
+                            onClick={() => handleSort(index)}>
+                            {option.text}
+                        </button>
+                    ))}
+                </div>
             </div>
         </div>
     );
