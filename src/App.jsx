@@ -70,6 +70,16 @@ export default function App() {
         }));
     }
 
+    function toggleSubtask(id, subIndex) {
+        setTasks(prevTasks => prevTasks.map((t) => {
+            if (t.id === id) {
+                const updated_subtasks = t.subtasks.map((sub, i) => i === subIndex ? {...sub, done: !sub.done} : sub);
+                return {...t, subtasks: updated_subtasks}
+            }
+            return t;
+        }));
+    }
+
     function deleteTask(id) {
         setTasks(prevTasks => prevTasks.filter((t) => t.id !== id))
     }
@@ -87,7 +97,8 @@ export default function App() {
 
                 <h2 className="list-title">Todo-list:</h2>
 
-                <TaskList tasks={visibleTasks} toggleTask={toggleTask} editTask={openEditModal} deleteTask={deleteTask} />
+                <TaskList tasks={visibleTasks} toggleTask={toggleTask} toggleSubtask={toggleSubtask}
+                          editTask={openEditModal} deleteTask={deleteTask} />
 
                 <button
                     className="btn-add-task-full"
