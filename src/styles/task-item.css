@@ -1,0 +1,207 @@
+.task-list-item {
+    display: flex;
+    flex-direction: column;
+    border-radius: 12px;
+    border: 1px solid #d0d0d0;
+}
+
+.task-container {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    min-height: 75px;
+    padding: 12px 16px;
+    background-color: #ffffff;
+    border-radius: 12px;
+    border: 1px solid #e0e0e0;
+    transition: background-color 0.2s ease;
+}
+
+.task-container.low    { border-left: 4px solid #9e9e9e; }
+.task-container.medium { border-left: 4px solid #ffc107; }
+.task-container.high   { border-left: 4px solid #f44336; }
+
+.task-container:hover {
+    background-color: #f5f7fa;
+}
+
+.subtask-list {
+    display: flex;
+    flex-direction: column;
+    list-style: none;
+    padding: 8px 12px 8px 0;
+    margin-left: 48px;
+    border-radius: 12px;
+    gap: 4px;
+}
+
+.subtask-list-item {
+    display: flex;
+    gap: 10px;
+    align-items: center;
+    padding: 6px 16px;
+    font-size: 0.9rem;
+    color: #555;
+}
+
+.subtask-title {
+    font-size: 0.95rem;
+    color: #444;
+}
+
+.subtask-title.done {
+    text-decoration: line-through;
+    color: #aaa;
+}
+
+.subtask-toggle {
+    appearance: none;
+    width: 18px;
+    height: 18px;
+    border: 2px solid #888;
+    border-radius: 50%;
+    background-color: white;
+    position: relative;
+    cursor: pointer;
+}
+
+.subtask-toggle:checked::before {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 8px;
+    height: 8px;
+    background-color: #888;
+    border-radius: 50%;
+    transform: translate(-50%, -50%);
+}
+
+.task-content {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    flex: 1;
+}
+
+.task-info {
+    display: flex;
+    flex-direction: column;
+}
+
+.task-title {
+    font-size: 1.25rem;
+}
+
+.task-title.done {
+    text-decoration: line-through;
+    color: #aaa;
+}
+
+.task-meta {
+    display: flex;
+    gap: 10px;
+    font-size: 0.75rem;
+    color: #666;
+    align-items: center;
+}
+
+.task-deadline {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+}
+
+.task-desc-preview {
+    font-style: italic;
+    color: #888;
+}
+
+.task-meta svg {
+    width: 16px;
+    height: 16px;
+    color: #666;
+}
+
+.task-control {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.subtasks-toggle-wrapper {
+    display: flex;
+    align-items: center;
+    min-width: 24px;
+    min-height: 24px;
+}
+
+.subtasks-toggle {
+    padding: 0;
+    margin: 0;
+    background-color: transparent;
+    outline: none;
+    border: none;
+    cursor: pointer;
+}
+
+.subtasks-toggle svg {
+    width: 24px;
+    height: 24px;
+    color: #666;
+}
+
+.task-toggle {
+    appearance: none;
+    -webkit-appearance: none;
+    width: 24px;
+    height: 24px;
+    border: 2px solid #3f51b5;
+    border-radius: 50%;
+    background-color: white;
+    cursor: pointer;
+    position: relative;
+    transition: all 0.2s ease;
+}
+
+.task-toggle:checked::before {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 10px;
+    height: 10px;
+    background-color: #3f51b5;
+    border-radius: 50%;
+    transform: translate(-50%, -50%);
+}
+
+.task-actions {
+    display: flex;
+    gap: 8px;
+}
+
+.btn-edit,
+.btn-delete {
+    background-color: transparent;
+    padding: 8px;
+    border: none;
+    border-radius: 20px;
+    font-size: 1.25rem;
+    cursor: pointer;
+    transition: color 0.2s ease;
+}
+
+.btn-edit {
+    color: #3f51b5;
+}
+.btn-edit:hover {
+    color: #2c3ca8;
+}
+
+.btn-delete {
+    color: #ff0000;
+}
+.btn-delete:hover {
+    color: #df0000;
+}

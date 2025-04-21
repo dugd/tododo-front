@@ -1,0 +1,99 @@
+.menu-search {
+    display: flex;
+    align-items: center;
+    margin-bottom: 12px;
+    background-color: #eee;
+    padding-left: 20px;
+    border-radius: 24px;
+}
+
+.search-icon {
+    width: 16px;
+    height: 16px;
+    color: #555;
+}
+
+.search-input {
+    flex: 1;
+    padding: 10px 12px;
+    border: none;
+    outline: none;
+    font-size: 1rem;
+    background-color: transparent;
+    color: #333;
+}
+
+.control-menu {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    gap: 8px;
+    margin-bottom: 16px;
+    font-size: 1rem;
+    color: #555;
+}
+
+.control-group {
+    display: flex;
+    flex: 1;
+    text-align: center;
+    flex-direction: column;
+    justify-content: center;
+    gap: 4px;
+    max-width: 300px;
+}
+
+.menu-label {
+    font-weight: 600;
+    color: #444;
+    margin-right: 4px;
+}
+
+.menu-btn-wrapper {
+    display: flex;
+}
+
+.menu-btn {
+    flex: 1;
+    background-color: transparent;
+    border: 1px solid #ccc;
+    padding: 8px 12px;
+    font-size: 0.9rem;
+    color: #333;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.menu-btn:first-child {
+    border-radius: 100px 0 0 100px;
+}
+
+.menu-btn:last-child {
+    border-radius: 0 100px 100px 0;
+}
+
+.menu-btn:hover {
+    background-color: #e6e9f0;
+}
+
+.menu-btn.selected {
+    background-color: #3f51b5;
+    color: white;
+    border-color: #3f51b5;
+}
+
+.btn-add-task-full {
+    width: 100%;
+    background: transparent;
+    color: #3f51b5;
+    border: none;
+    padding: 12px;
+    border-radius: 12px;
+    font-size: 1rem;
+    cursor: pointer;
+    transition: background-color 0.2s ease;
+}
+
+.btn-add-task-full:hover {
+    background-color: rgba(63, 81, 181, 0.1);
+}
