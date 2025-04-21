@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import {useState, useEffect} from 'react';
 import ReactDOM from 'react-dom';
 import '../styles/modal.css'
 
@@ -7,18 +7,30 @@ export default function TaskFormModal({ isOpen, onClose, onSave, initialData = n
     const [description, setDescription] = useState('');
     const [deadline, setDeadline] = useState('');
     const [priority, setPriority] = useState(2);
+    const [subtasks, setSubtasks] = useState([]);
+
+    const [isReady, setIsReady] = useState(false);
+    const [subtaskFocus, setSubtaskFocus] = useState(null);
 
     useEffect(() => {
-        if (initialData) {
-            setTitle(initialData.title || '');
-            setDescription(initialData.description || '');
-            setDeadline(initialData.deadline?.slice(0, 10) || '');
-            setPriority(initialData.priority || 2);
+        if (isOpen) {
+            if (initialData) {
+                setTitle(initialData.title || '');
+                setDescription(initialData.description || '');
+                setDeadline(initialData.deadline?.slice(0, 10) || '');
+                setPriority(initialData.priority || 2);
+                setSubtasks(initialData.subtasks || []);
+            } else {
+                setTitle('');
+                setDescription('');
+                setDeadline('');
+                setPriority(2);
+                setSubtasks([]);
+            }
+
+            requestAnimationFrame(() => setIsReady(true)); // maybe it'll help
         } else {
-            setTitle('');
-            setDescription('');
-            setDeadline('');
-            setPriority(2);
+            setIsReady(false);
         }
     }, [initialData, isOpen]);
 
@@ -28,12 +40,13 @@ export default function TaskFormModal({ isOpen, onClose, onSave, initialData = n
             title,
             description,
             deadline,
-            priority: parseInt(priority)
+            priority: parseInt(priority),
+            subtasks,
         });
         onClose();
     }
 
-    if (!isOpen) return null;
+    if (!isOpen || !isReady) return null;
 
     return ReactDOM.createPortal(
         <>
@@ -81,6 +94,63 @@ export default function TaskFormModal({ isOpen, onClose, onSave, initialData = n
                             <option value={2}>Середній</option>
                             <option value={3}>Високий</option>
                         </select>
+                    </div>
+
+                    <div className="modal-group">
+                        <label className="modal-label">Підзадачі</label>
+                        <ul className="subtask-group">
+                            {subtasks.map((subtask, index) => (
+                                <li className="subtask-entry" key={index}>
+                                    <input
+                                        className="subtask-toggle"
+                                        type="checkbox"
+                                        checked={subtask.done}
+                                        onChange={() => {
+                                            const updated = [...subtasks];
+                                            updated[index].done = !updated[index].done;
+                                            setSubtasks(updated);
+                                        }}
+                                    />
+                                    <input
+                                        className="subtask-input"
+                                        type="text"
+                                        value={subtask.title}
+                                        required
+                                        onChange={(e) => {
+                                            const updated = [...subtasks];
+                                            updated[index].title = e.target.value;
+                                            setSubtasks(updated);
+                                        }}
+                                        onBlur={(e) => {
+                                            // TODO: Need rework
+                                            const text = e.target.value.trim();
+                                            if (text === "") {
+                                                setSubtasks((prev) => prev.filter((sub, i) => i !== index))
+                                            }
+                                            setSubtaskFocus(null);
+                                        }}
+                                        autoFocus={index === subtaskFocus}
+                                    />
+                                </li>
+                            ))}
+                            <li className="subtask-entry new">
+                                <input className="subtask-toggle" type="checkbox" disabled/>
+                                <input
+                                    className="subtask-input"
+                                    type="text"
+                                    placeholder="Створити підзадачу..."
+                                    value=""
+                                    onChange={(e) => {
+                                        const text = e.target.value.trim();
+                                        if (text !== "") {
+                                            e.target.blur();
+                                            setSubtaskFocus(subtasks.length)
+                                            setSubtasks([...subtasks, { title: text, done: false, }]);
+                                        }
+                                    }}
+                                />
+                            </li>
+                        </ul>
                     </div>
 
                     <div className="modal-actions">

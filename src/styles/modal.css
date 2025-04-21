@@ -83,6 +83,26 @@
     transition: background-color 0.2s ease;
 }
 
+.subtask-group {
+    display: flex;
+    flex-direction: column;
+    list-style: none;
+    padding: 0;
+    gap: 4px;
+}
+
+.subtask-entry {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.subtask-input {
+    flex: 1;
+    border: none;
+    outline: none;
+}
+
 .btn-save {
     background-color: #2e7bdd;
     color: white;

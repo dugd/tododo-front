@@ -19,7 +19,7 @@ export default function App() {
     const [filterFn, setFilterFn] = useState(() => () => true);
     const [sortFn, setSortFn] = useState(null);
 
-    function addTask({ title, description, deadline, priority }) {
+    function addTask({ title, description, deadline, priority, subtasks }) {
         setTasks(prevTasks =>
             [
                 ...prevTasks,
@@ -29,6 +29,7 @@ export default function App() {
                     description,
                     deadline,
                     priority,
+                    subtasks,
                     done: false
                 }
             ]
