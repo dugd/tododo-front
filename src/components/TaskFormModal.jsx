@@ -84,8 +84,8 @@ export default function TaskFormModal({ isOpen, onClose, onSave, initialData = n
                     </div>
 
                     <div className="modal-actions">
-                        <button className="modal-btn btn-save" type="submit">Зберегти</button>
                         <button className="modal-btn btn-cancel" type="button" onClick={onClose}>Скасувати</button>
+                        <button className="modal-btn btn-save" type="submit">Зберегти</button>
                     </div>
                 </form>
             </div>

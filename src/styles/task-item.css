@@ -2,6 +2,7 @@
     display: flex;
     align-items: center;
     justify-content: space-between;
+    min-height: 75px;
     padding: 12px 16px;
     background-color: #ffffff;
     border-radius: 12px;
@@ -24,7 +25,7 @@
     flex: 1;
 }
 
-.task-text {
+.task-info {
     display: flex;
     flex-direction: column;
 }
@@ -36,7 +37,7 @@
 .task-meta {
     display: flex;
     gap: 10px;
-    font-size: 0.85rem;
+    font-size: 0.75rem;
     color: #666;
     align-items: center;
 }
@@ -57,8 +58,33 @@
     height: 16px;
     color: #666;
 }
-.icon-green {
-    color: #4caf50;
+
+.task-control {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.subtasks-toggle-wrapper {
+    display: flex;
+    align-items: center;
+    min-width: 24px;
+    min-height: 24px;
+}
+
+.subtasks-toggle {
+    padding: 0;
+    margin: 0;
+    background-color: transparent;
+    outline: none;
+    border: none;
+    cursor: pointer;
+}
+
+.subtasks-toggle svg {
+    width: 24px;
+    height: 24px;
+    color: #666;
 }
 
 .task-toggle {

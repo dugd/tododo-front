@@ -1,9 +1,12 @@
-import { FaTrash, FaClipboardList, FaEdit } from 'react-icons/fa';
+import { FaTrash, FaAngleDown, FaAngleUp, FaEdit } from 'react-icons/fa';
 import { MdOutlineDateRange } from "react-icons/md";
 import { format } from 'date-fns';
 import "../styles/task-item.css";
+import {useState} from "react";
 
 export default function TaskItem({ task, toggleTask, editTask, deleteTask }) {
+    const [isSubtasksOpen, setIsSubtasksOpen] = useState(false);
+
     const { id, title, done, deadline, priority, description, subtasks } = task;
 
     const deadlineFormatted = deadline
@@ -15,21 +18,27 @@ export default function TaskItem({ task, toggleTask, editTask, deleteTask }) {
     return (
         <li className={`task-list-item ${priorityClass}`}>
             <div className="task-content">
-                <input
-                    className="task-toggle"
-                    type="checkbox"
-                    checked={done}
-                    onChange={() => toggleTask(id)}
-                />
+                <div className="task-control">
+                    <div className="subtasks-toggle-wrapper">
+                        {subtasks?.length > 0 && (
+                            <button className="subtasks-toggle" onClick={() => setIsSubtasksOpen(!isSubtasksOpen)}>
+                                <span title="Має підзадачі">
+                                    {isSubtasksOpen ? <FaAngleDown /> : <FaAngleUp/>}
+                                </span>
+                            </button>
+                        )}
+                    </div>
+                    <input
+                        className="task-toggle"
+                        type="checkbox"
+                        checked={done}
+                        onChange={() => toggleTask(id)}
+                    />
+                </div>
 
-                <div className="task-text">
+                <div className="task-info">
                     <span className="task-title">{title}</span>
                     <div className="task-meta">
-                        {subtasks?.length > 0 && (
-                            <span title="Має підзадачі">
-                                <FaClipboardList className="icon-green" />
-                            </span>
-                        )}
                         {deadlineFormatted !== "—" && (
                             <div className="task-deadline">
                                 <MdOutlineDateRange />
