@@ -1,4 +1,3 @@
-import { useState } from "react";
 import TaskList from "./components/TaskList.jsx";
 import Header from "./components/Header.jsx";
 import TaskMenu from "./components/TaskMenu.jsx";
@@ -8,6 +7,7 @@ import "./styles/base.css";
 import "./styles/layout.css";
 import "./styles/task-menu.css";
 import TaskFormModal from "./components/TaskFormModal.jsx";
+import {useState} from "react";
 
 
 export default function App() {
@@ -16,8 +16,9 @@ export default function App() {
     const [modalOpen, setModalOpen] = useState(false);
     const [editingTask, setEditingTask] = useState(null);
 
-    const [filterFn, setFilterFn] = useState(() => () => true);
-    const [sortFn, setSortFn] = useState(null);
+    const [filterFn, setFilterFn] = useState(() => (t) => true);
+    const [sortFn, setSortFn] = useState(() => (t) => 0);
+    const [searchInput, setSearchInput] = useState("");
 
     function addTask({ title, description, deadline, priority, subtasks }) {
         setTasks(prevTasks =>
@@ -85,21 +86,26 @@ export default function App() {
         setTasks(prevTasks => prevTasks.filter((t) => t.id !== id))
     }
 
-    const visibleTasks = tasks
-        .filter(filterFn)
-        .sort(sortFn ? sortFn : () => 0);
+    function applyFilters(tasks) {
+        return tasks.filter((t) => filterFn(t) && t.title.startsWith(searchInput.trim()));
+    }
+
+    const visibleTasks = applyFilters(tasks).sort(sortFn);
 
     return (
         <>
             <Header />
             <main className="app">
 
-                <TaskMenu onFilter={setFilterFn} onSort={setSortFn} />
+                <TaskMenu onFilter={setFilterFn} onSort={setSortFn} onSearch={setSearchInput} />
 
                 <h2 className="list-title">Todo-list:</h2>
 
-                <TaskList tasks={visibleTasks} toggleTask={toggleTask} toggleSubtask={toggleSubtask}
-                          editTask={openEditModal} deleteTask={deleteTask} />
+                <TaskList tasks={visibleTasks} t
+                          oggleTask={toggleTask}
+                          toggleSubtask={toggleSubtask}
+                          editTask={openEditModal}
+                          deleteTask={deleteTask} />
 
                 <button
                     className="btn-add-task-full"
