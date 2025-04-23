@@ -1,19 +1,16 @@
 import TaskList from "./components/TaskList.jsx";
 import Header from "./components/Header.jsx";
 import TaskMenu from "./components/TaskMenu.jsx";
-import initTasks from "./data.js";
+import TaskFormModal from "./components/TaskFormModal.jsx";
+import {useEffect, useState} from "react";
+import {getTasksApi, createTaskApi, updateTaskApi, deleteTaskApi, toggleTaskApi, toggleSubtaskApi } from "./api/tasks.js";
 import "./styles/reset.css";
 import "./styles/base.css";
 import "./styles/layout.css";
 import "./styles/task-menu.css";
-import TaskFormModal from "./components/TaskFormModal.jsx";
-import {useEffect, useState} from "react";
-
-const BASE_URL = import.meta.env.VITE_BASE_URL;
-
 
 export default function App() {
-    const [tasks, setTasks] = useState(initTasks);
+    const [tasks, setTasks] = useState([]);
 
     const [modalOpen, setModalOpen] = useState(false);
     const [editingTask, setEditingTask] = useState(null);
@@ -23,38 +20,95 @@ export default function App() {
     const [searchInput, setSearchInput] = useState("");
 
     useEffect(() => {
-        async function fetchData() {
-            const res = await fetch(BASE_URL + "/tasks");
-            if (res.ok) {
-                const data = await res.json();
-                setTasks(data);
-            }
-        }
-        const _ = fetchData();
+        const _ = loadTasks();
     }, []);
 
-    function addTask({ title, description, deadline, priority, subtasks }) {
-        setTasks(prevTasks =>
-            [
-                ...prevTasks,
-                {
-                    id: crypto.randomUUID(),
-                    title,
-                    description,
-                    deadline,
-                    priority,
-                    subtasks,
-                    done: false
-                }
-            ]
-        );
+    async function loadTasks() {
+        try {
+            const initTasks = await getTasksApi();
+            if (initTasks === null) {
+                return;
+            }
+            setTasks(initTasks);
+        } catch (e) {
+            console.log(e);
+        }
     }
 
-    function editTask(id, data) {
-        setTasks(prevTasks => prevTasks.map(t => {
-            return t.id === id ? { ...t, ...data } : t;
-            })
-        );
+    async function addTask(payload) {
+        try {
+            const newTask = await createTaskApi(payload);
+            if (newTask === null) {
+                return;
+            }
+            setTasks(prevTasks =>
+                [
+                    ...prevTasks,
+                    newTask,
+                ]
+            );
+        } catch (e) {
+            console.log(e);
+        }
+    }
+
+    async function editTask(id, data) {
+        try {
+            const updatedTask = await updateTaskApi(id, data);
+            if (updatedTask === null) {
+                return;
+            }
+            setTasks(prevTasks => prevTasks.map(t => {
+                    return t._id === id ? updatedTask : t;
+                })
+            );
+        } catch (e) {
+            console.log(e);
+        }
+    }
+
+    async function toggleTask(id) {
+        try {
+            const updatedTask = await toggleTaskApi(id);
+            if (updatedTask === null) {
+                return;
+            }
+            setTasks(prevTasks => prevTasks.map(t => {
+                    return t._id === id ? updatedTask : t;
+                })
+            );
+        } catch (e) {
+            console.log(e);
+        }
+    }
+
+    async function toggleSubtask(id, subIndex) {
+        try {
+            const updatedTask = await toggleSubtaskApi(id, subIndex);
+            if (updatedTask === null) {
+                return;
+            }
+            setTasks(prevTasks => prevTasks.map(t => {
+                    return t._id === id ? updatedTask : t;
+                })
+            );
+        } catch (e) {
+            console.log(e);
+        }
+    }
+
+    async function deleteTask(id) {
+        try {
+            await deleteTaskApi(id);
+            setTasks(prevTasks => prevTasks.filter((t) => t._id !== id))
+
+        } catch (e) {
+            console.log(e);
+        }
+    }
+
+    function applyFilters(tasks) {
+        return tasks.filter((t) => filterFn(t) && t.title.startsWith(searchInput.trim()));
     }
 
     function openCreateModal() {
@@ -67,40 +121,13 @@ export default function App() {
         setModalOpen(true);
     }
 
-    function saveTask(data) {
+    async function saveTask(data) {
         if (editingTask) {
-            editTask(editingTask.id, data);
+            await editTask(editingTask._id, data);
         }
         else {
-            addTask(data);
+            await addTask(data);
         }
-    }
-
-    function toggleTask(id) {
-        setTasks(prevTasks => prevTasks.map((t) => {
-            if (t.id === id) {
-                return {...t, done: !t.done}
-            }
-            return t;
-        }));
-    }
-
-    function toggleSubtask(id, subIndex) {
-        setTasks(prevTasks => prevTasks.map((t) => {
-            if (t.id === id) {
-                const updated_subtasks = t.subtasks.map((sub, i) => i === subIndex ? {...sub, done: !sub.done} : sub);
-                return {...t, subtasks: updated_subtasks}
-            }
-            return t;
-        }));
-    }
-
-    function deleteTask(id) {
-        setTasks(prevTasks => prevTasks.filter((t) => t.id !== id))
-    }
-
-    function applyFilters(tasks) {
-        return tasks.filter((t) => filterFn(t) && t.title.startsWith(searchInput.trim()));
     }
 
     const visibleTasks = applyFilters(tasks).sort(sortFn);

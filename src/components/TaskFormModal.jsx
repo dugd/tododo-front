@@ -38,10 +38,10 @@ export default function TaskFormModal({ isOpen, onClose, onSave, initialData = n
         e.preventDefault();
         onSave({
             title,
-            description,
-            deadline,
+            description: (description || undefined),
+            deadline: (deadline || undefined),
             priority: parseInt(priority),
-            subtasks,
+            subtasks: (deadline.length !== 0 ? deadline : undefined),
         });
         onClose();
     }

@@ -10,7 +10,7 @@ export default function TaskList({ tasks, toggleTask, toggleSubtask, editTask, d
                 </p>
                 : tasks.map((task) => {
                     return <TaskItem
-                        key={task.id}
+                        key={task._id}
                         task={task}
                         toggleTask={toggleTask}
                         toggleSubtask={toggleSubtask}

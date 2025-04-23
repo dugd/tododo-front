@@ -8,7 +8,7 @@ import SubtaskItem from "./SubtaskItem.jsx";
 export default function TaskItem({ task, toggleTask, toggleSubtask, editTask, deleteTask }) {
     const [isSubtasksOpen, setIsSubtasksOpen] = useState(false);
 
-    const { id, title, done, deadline, priority, description, subtasks } = task;
+    const { _id, title, done, deadline, priority, description, subtasks } = task;
 
     const deadlineFormatted = deadline
         ? format(new Date(deadline), 'dd.MM.yyyy')
@@ -34,7 +34,7 @@ export default function TaskItem({ task, toggleTask, toggleSubtask, editTask, de
                             className="task-toggle"
                             type="checkbox"
                             checked={done}
-                            onChange={() => toggleTask(id)}
+                            onChange={() => toggleTask(_id)}
                         />
                     </div>
 
@@ -62,7 +62,7 @@ export default function TaskItem({ task, toggleTask, toggleSubtask, editTask, de
                     <button className="btn-edit" onClick={() => editTask(task)}>
                         <FaEdit />
                     </button>
-                    <button className="btn-delete" onClick={() => deleteTask(id)}>
+                    <button className="btn-delete" onClick={() => deleteTask(_id)}>
                         <FaTrash />
                     </button>
                 </div>
@@ -76,7 +76,7 @@ export default function TaskItem({ task, toggleTask, toggleSubtask, editTask, de
                                 key={i}
                                 index={i}
                                 subtask={sub}
-                                toggleSubtask={(subIndex) => toggleSubtask(id, subIndex)}
+                                toggleSubtask={(subIndex) => toggleSubtask(_id, subIndex)}
                             />
                         );
                     })}
