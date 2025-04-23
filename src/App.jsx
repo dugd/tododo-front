@@ -7,7 +7,9 @@ import "./styles/base.css";
 import "./styles/layout.css";
 import "./styles/task-menu.css";
 import TaskFormModal from "./components/TaskFormModal.jsx";
-import {useState} from "react";
+import {useEffect, useState} from "react";
+
+const BASE_URL = import.meta.env.VITE_BASE_URL;
 
 
 export default function App() {
@@ -19,6 +21,17 @@ export default function App() {
     const [filterFn, setFilterFn] = useState(() => (t) => true);
     const [sortFn, setSortFn] = useState(() => (t) => 0);
     const [searchInput, setSearchInput] = useState("");
+
+    useEffect(() => {
+        async function fetchData() {
+            const res = await fetch(BASE_URL + "/tasks");
+            if (res.ok) {
+                const data = await res.json();
+                setTasks(data);
+            }
+        }
+        const _ = fetchData();
+    }, []);
 
     function addTask({ title, description, deadline, priority, subtasks }) {
         setTasks(prevTasks =>
@@ -102,7 +115,7 @@ export default function App() {
                 <h2 className="list-title">Todo-list:</h2>
 
                 <TaskList tasks={visibleTasks} t
-                          oggleTask={toggleTask}
+                          toggleTask={toggleTask}
                           toggleSubtask={toggleSubtask}
                           editTask={openEditModal}
                           deleteTask={deleteTask} />
