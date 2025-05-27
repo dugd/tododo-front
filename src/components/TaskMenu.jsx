@@ -15,7 +15,9 @@ export default function TaskMenu({ onFilter, onSort, onSearch }) {
         {
             text: 'Просрочені',
             rule: (t) => {
-                return !t.done && new Date(t.deadline) < new Date()
+                let today = new Date();
+                today.setHours(0, 0, 0, 0);
+                return !t.done && new Date(t.deadline) < today
             }
         }
     ];
