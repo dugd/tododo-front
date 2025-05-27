@@ -108,7 +108,9 @@ export default function App() {
     }
 
     function applyFilters(tasks) {
-        return tasks.filter((t) => filterFn(t) && t.title.startsWith(searchInput.trim()));
+        return tasks.filter((t) => {
+            return filterFn(t) && t.title.startsWith(searchInput.trim());
+        });
     }
 
     function openCreateModal() {
