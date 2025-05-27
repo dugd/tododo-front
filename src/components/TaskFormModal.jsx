@@ -41,7 +41,7 @@ export default function TaskFormModal({ isOpen, onClose, onSave, initialData = n
             description: (description || undefined),
             deadline: (deadline || undefined),
             priority: parseInt(priority),
-            subtasks: (deadline.length !== 0 ? deadline : undefined),
+            subtasks: (subtasks.length !== 0 ? subtasks : undefined),
         });
         onClose();
     }
